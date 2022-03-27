@@ -1,4 +1,6 @@
-public class ConditionalStatement { 
+package com.startjava.lesson1;
+
+public class ConditionalStatement {
 
   public static void main(String[] args) {	  
 	  int     age     = 0;

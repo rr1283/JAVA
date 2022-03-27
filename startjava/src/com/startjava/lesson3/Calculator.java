@@ -1,4 +1,4 @@
-package com.startjava.wolf;
+package com.startjava.lesson3;
 
 public class Calculator {
 

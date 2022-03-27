@@ -1,4 +1,6 @@
-public class Variable { 
+package com.startjava.lesson1;
+
+public class Variable {
 
   public static void main(String[] args) {	  
 	  int    frequency_ghz = 5000;

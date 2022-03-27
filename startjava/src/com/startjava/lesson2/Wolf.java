@@ -1,3 +1,5 @@
+package com.startjava.lesson2;
+
 public class Wolf {
 
   char sex = 'M';
