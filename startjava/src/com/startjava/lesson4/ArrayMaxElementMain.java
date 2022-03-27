@@ -20,7 +20,7 @@ public class ArrayMaxElementMain {
         int max = numbers[0];
         for(int i=0; i<maxLength-1;i++) {
             if(max<numbers[i+1]) {
-                max = numbers[i+1];
+                max = numbers[i+1] ;
             }
 
         }
