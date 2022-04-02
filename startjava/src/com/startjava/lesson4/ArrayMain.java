@@ -35,7 +35,8 @@ public class ArrayMain {
         System.out.println();
         String[] text = new String[3];
 //      text
-        for (String string : text) {
+        for (int i = 0; i < text.length; i++) {
+            String string = text[i];
             System.out.println(string);
         }
     }
