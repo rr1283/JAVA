@@ -9,7 +9,7 @@
 //    Если же совпадений не было, то число добавляется массив по текущему индексу,
 //    после чего индекс увеличивается на 1
 
- package com.startjava.lesson4;
+package com.startjava.lesson4;
 
 import java.util.Scanner;
 import static java.lang.Math.*;
@@ -26,14 +26,23 @@ import static java.lang.Math.*;
 
             System.out.println("Заполните массив целыми числами через пробел: ");
 
-            numbers[0] = scanner.nextInt();
-            int nextScanner = 0;
+           // numbers[0] = scanner.nextInt();
+            int tmp = 0;
+            int nextScanner;
 
-            for(int i=1; i<maxLength; i++) {
+            for(int i=0; i<maxLength; i++) {
+
                 nextScanner = scanner.nextInt();
-                if (abs(numbers[0]) != nextScanner) {
-                    numbers[i] = nextScanner;
+
+                for(int j : numbers) if (abs(numbers[j]) == abs(nextScanner)) {
+                    tmp = tmp+1;
                 }
+
+                if(tmp == 0){
+                    numbers[i] = nextScanner;
+
+                }else i=i-1;
+                tmp = 0;
             }
 
             for (int number : numbers) {
