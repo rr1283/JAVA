@@ -15,6 +15,7 @@ package com.startjava.lesson4;
 import java.util.Scanner;
 import static java.lang.Math.*;
 
+
     public class Task1 {
 
 
