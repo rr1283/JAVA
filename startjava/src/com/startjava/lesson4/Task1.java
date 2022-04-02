@@ -11,6 +11,7 @@ package com.startjava.lesson4;
 //    Если же совпадений не было, то число добавляется массив по текущему индексу,
 //    после чего индекс увеличивается на 1
 
+
 import java.util.Scanner;
 import static java.lang.Math.*;
 
