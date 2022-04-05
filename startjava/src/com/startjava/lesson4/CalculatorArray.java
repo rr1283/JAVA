@@ -2,71 +2,52 @@ package com.startjava.lesson4;
 
 public class CalculatorArray {
 
+    private int firstNumber;
+    private int secondNumber;
+    private char mathOperation;
 
-/*
-Модифицируйте программу Калькулятор:
-используйте следующий формат ввода (пример): Введите математическое выражение: 2 ^ 10 введенное выражение храните в массиве. В этом поможет метод String.split()
+    String string;
 
-для преобразования чисел выражения из String в int используйте метод Integer.parseInt()
+    public void text(String string) {
+        this.string = string;
+        String[] words = this.string.split(" ");
+        firstNumber = Integer.parseInt(words[0]);
+        mathOperation = words[1].charAt(0);
+        secondNumber = Integer.parseInt(words[2]);
+    }
 
-замените методами класса Math, какие только сможете найти, ваши реализации вычислений
+    String calculate() {
+        String result = "";
+        switch(mathOperation)
+          {
+            case '+':
+                result = String.valueOf(Math.addExact(firstNumber,secondNumber));
+                break;
+            case '-':
+//                result = String.valueOf(
+//                break;
+//            case '*':
+//                System.out.println("Result " + (firstNumber * secondNumber));
+//                break;
+//            case '/':
+//                System.out.println("Result " + (firstNumber / secondNumber));
+//                break;
+//            case '^':
+//                pow();
+//                break;
+            default: System.out.println("Error");
 
-метод calculate() должен возвращать результат вычисления. Выводите его в CalculatorTest
-
-сделайте метод calculate() статическим. При этом создавать экземпляр Calculator уже не нужно
-
-используйте новый switch expression(1, 2)
-
-делайте проверку, что пользователь использует для вычислений целые положительные числа
-при вводе других чисел выводите предупреждение, а также просите его ввести корректные значения
-
-*/
-
-        private int firstNumber;
-        private int secondNumber;
-        private char mathOperation;
-
-        public void setFirstNumber(int firstNumber) {
-            this.firstNumber = firstNumber;
         }
+        return result;
+    }
 
-        public void setSecondNumber(int secondNumber) {
-            this.secondNumber = secondNumber;
+    private void pow() {
+        int result = 1;
+        for(int i=0; i<secondNumber;i++) {
+            result = result * firstNumber;
         }
+        System.out.println("Result " + result);
+    }
 
-        public void setMathOperation(char mathOperation) {
-            this.mathOperation = mathOperation;
-        }
-
-        public void calculate() {
-            switch(mathOperation) {
-                case '+':
-                    System.out.println("Result " + (firstNumber + secondNumber));
-                    break;
-                case '-':
-                    System.out.println("Result " + (firstNumber - secondNumber));
-                    break;
-                case '*':
-                    System.out.println("Result " + (firstNumber * secondNumber));
-                    break;
-                case '/':
-                    System.out.println("Result " + (firstNumber / secondNumber));
-                    break;
-                case '^':
-                    pow();
-                    break;
-                default: System.out.println("Error");
-
-            }
-        }
-
-        private void pow() {
-            int result = 1;
-            for(int i=0; i<secondNumber;i++) {
-                result = result * firstNumber;
-            }
-            System.out.println("Result " + result);
-        }
 
 }
-
