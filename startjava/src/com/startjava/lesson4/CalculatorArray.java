@@ -17,37 +17,28 @@ public class CalculatorArray {
     }
 
     String calculate() {
-        String result = "";
+        String result = null;
         switch(mathOperation)
           {
             case '+':
                 result = String.valueOf(Math.addExact(firstNumber,secondNumber));
                 break;
             case '-':
-//                result = String.valueOf(
-//                break;
-//            case '*':
-//                System.out.println("Result " + (firstNumber * secondNumber));
-//                break;
-//            case '/':
-//                System.out.println("Result " + (firstNumber / secondNumber));
-//                break;
-//            case '^':
-//                pow();
-//                break;
+                result = String.valueOf(Math.subtractExact(firstNumber,secondNumber));
+                break;
+            case '*':
+                result = String.valueOf(Math.multiplyExact(firstNumber,secondNumber));
+                break;
+            case '/':
+                result = String.valueOf(firstNumber / secondNumber);
+                break;
+            case '^':
+                result = String.valueOf(Math.pow(firstNumber,secondNumber));
+                break;
             default: System.out.println("Error");
 
         }
         return result;
     }
-
-    private void pow() {
-        int result = 1;
-        for(int i=0; i<secondNumber;i++) {
-            result = result * firstNumber;
-        }
-        System.out.println("Result " + result);
-    }
-
 
 }
