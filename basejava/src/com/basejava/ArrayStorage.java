@@ -1,3 +1,5 @@
+package com.basejava;
+
 /**
  * Array based storage for Resumes
  */
