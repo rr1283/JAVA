@@ -7,33 +7,39 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    static Resume[] storage = new Resume[10000];
+    static Resume[] storage = new Resume[10];
 
     void clear() {
         Arrays.fill(storage, null);
     }
 
-    static void save(Resume r) {
+     void save(Resume r) {
         for (int i = 0; i < storage.length; i++) {
-            storage[i] = r;
+            if (storage[i] == null) {
+                storage[i] = r;
+                i = storage.length;
+            }
         }
     }
 
-
     Resume get(String uuid) {
-        Resume tmp = null; 
+        Resume tmp = null;
         for (int i = 0; i < storage.length; i++) {
 
             if (storage[i].uuid == uuid) {
                 tmp = storage[i];
+                i = storage.length;
             }
         }
         return tmp;
     }
     
     void delete(String uuid) {
-        if (storage[0].uuid == uuid) {
-            storage[0] = null;
+        for (int i = 0; i < storage.length; i++) {
+            if (storage[i].uuid == uuid) {
+                storage[i] = null;
+                i = storage.length;
+            }
         }
     }
 
