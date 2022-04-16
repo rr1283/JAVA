@@ -1,32 +1,49 @@
 package com.basejava;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    Resume[] storage = new Resume[10000];
+    static Resume[] storage = new Resume[10000];
 
     void clear() {
+        Arrays.fill(storage, null);
     }
 
-    void save(Resume r) {
+    static void save(Resume r) {
+        for (int i = 0; i < storage.length; i++) {
+            storage[i] = r;
+        }
     }
 
     Resume get(String uuid) {
-        return null;
-    }
+        Resume tmp = null; 
+        for (int i = 0; i < storage.length; i++) {
 
+            if (storage[i].uuid == uuid) {
+                tmp = storage[i];
+            }
+        }
+        return tmp;
+    }
+    
     void delete(String uuid) {
+        if (storage[0].uuid == uuid) {
+            storage[0] = null;
+        }
     }
 
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() {
-        return new Resume[0];
+     Resume[] getAll() {
+        return Arrays.copyOf(storage,storage.length);
     }
 
     int size() {
-        return 0;
+        return Array.getLength(storage);
     }
 }
