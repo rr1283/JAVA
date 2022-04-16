@@ -14,7 +14,7 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        for (int i = 0; i < storage.length; i++) {
+        for (int i = 0; i < size()+1; i++) {
             if (storage[i].uuid == uuid) {
                 storage[i] = null;
                 compress(storage);
