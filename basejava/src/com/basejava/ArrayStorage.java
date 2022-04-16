@@ -19,6 +19,7 @@ public class ArrayStorage {
         }
     }
 
+
     Resume get(String uuid) {
         Resume tmp = null; 
         for (int i = 0; i < storage.length; i++) {
