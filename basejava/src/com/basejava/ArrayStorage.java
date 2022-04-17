@@ -6,61 +6,55 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    static Resume[] storage = new Resume[10000];
+    Resume[] storage = new Resume[10000];
 
     int size = 0;
 
     void save(Resume r) {
         storage[size] = r;
         size++;
-        return;
     }
 
     void delete(String uuid) {
-        for (int i = 0; i < size + 1; i++) {
+        for (int i = 0; i < size; i++) {
             if (storage[i].uuid == uuid) {
                 storage[i] = null;
                 size--;
-                compress(storage);
+                System.arraycopy(compress(storage), 0, storage, 0, storage.length);
                 return;
             }
         }
     }
 
     void clear() {
-        Arrays.fill(storage, size, storage.length - 1, null);
+        Arrays.fill(storage, 0, size, null);
+        size = 0;
     }
 
     Resume get(String uuid) {
-        for (int i = 0; i < size + 1; i++) {
+        for (int i = 0; i < size; i++) {
             if (storage[i].uuid == uuid) {
                 return storage[i];
-            } else return null;
+            }
         }
         return null;
     }
 
     Resume[] compress(Resume[] array) {
+        Resume[] tmpArray = new Resume[array.length];
+        int j = 0;
         for (int i = 0; i < array.length; i++) {
-            Resume cell = array[i];
-            if (cell == null) {
-                int j = i + 1;
-                while (j < array.length && array[j] == null)
-                    j++;
-                if (j < array.length) {
-                    array[i] = array[j];
-                    array[j] = null;
-                }
-            }
+            if (array[i] != null)
+                System.arraycopy(array, i, tmpArray, j++, 1);
         }
-        return array;
+        return tmpArray;
     }
 
     /**
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
+        return Arrays.copyOf(storage, size);
     }
 
     int size() {
