@@ -50,7 +50,8 @@ public class ArrayStorage {
     public Resume get(String uuid) {
         if (isExistsResume(String.valueOf(uuid)) == 1) {
             for (int i = 0; i < size; i++) {
-                if (uuid == storage[i].getUuid()) {
+             //   if (uuid == storage[i].getUuid()) {
+                    if (storage[i].getUuid().equals(uuid)) {
                     return storage[i];
                 }
             }
