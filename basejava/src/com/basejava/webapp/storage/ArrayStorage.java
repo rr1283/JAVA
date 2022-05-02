@@ -13,28 +13,18 @@ public class ArrayStorage {
     private int size = 0;
 
     public void save(Resume r) {
-        if ((isExistsResume(String.valueOf(r)) == 0) & (size < storage.length)) {
+        if ((isExistsResume(String.valueOf(r)) == 0) & (arrayIsFull())) {
             storage[size] = r;
             size++;
+            System.out.println("Резюме " + String.valueOf(r) + " сохранено");
         }
     }
 
-    /*
-        Реализуйте в ArrayStorage метод update(Resume resume). Запустите его в MainTestArrayStorage
-        Сделайте проверки в:
-      //  get,
-      //  update,
-      //  delete
-        на наличие резюме в storage
-     //   save на отсутствие резюме в storage
-     //   save на переполнение storage
-      //  Выводите в консоль информативные предупреждения, для указанных выше проверок, с указанием uuid
-    */
-    public void update(Resume r) {
+    public void update(Resume r, Resume rNew) {
         if (isExistsResume(String.valueOf(r)) == 1) {
             for (int i = 0; i < size; i++) {
                 if (r.getUuid() == storage[i].getUuid()) {
-                    storage[i] = storage[i];
+                    storage[i] = rNew;
                 }
             }
         }
@@ -90,5 +80,15 @@ public class ArrayStorage {
             System.out.println("Резюме " + uuid + " не найдено");
         }
         return t;
+    }
+
+    public boolean arrayIsFull() {
+        if (size < storage.length) {
+            System.out.println("Доступно: " + Math.subtractExact(storage.length, size));
+            return true;
+        } else {
+            System.out.println("Свободного места нет");
+        }
+        return false;
     }
 }
