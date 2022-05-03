@@ -1,6 +1,7 @@
-package com.basejava.webapp.storage;
+package com.basejava.webapp;
 
 import com.basejava.webapp.model.Resume;
+import com.basejava.webapp.storage.ArrayStorage;
 
 /**
  * Test for your ArrayStorage implementation
@@ -19,22 +20,15 @@ public class MainTestArrayStorage {
         r5.setUuid("uuid5");
         Resume r7 = new Resume();
         r7.setUuid("uuid7");
-        Resume r5000 = new Resume();
-        r5000.setUuid("uuid5000");
 
         ARRAY_STORAGE.save(r1);
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);
         ARRAY_STORAGE.save(r5);
-        ARRAY_STORAGE.save(r5);
+     //   ARRAY_STORAGE.save(r5);
+        ARRAY_STORAGE.save(r7);
 
-        System.out.println("update(r5) Start");
-        ARRAY_STORAGE.update(r5,r5000);
-        System.out.println("update(r5) End");
-
-        System.out.println("update(r7) Start");
-        ARRAY_STORAGE.update(r5,r7);
-        System.out.println("update(r7) End");
+        ARRAY_STORAGE.update(r5);
 
         System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());

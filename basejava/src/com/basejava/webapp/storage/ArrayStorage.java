@@ -13,32 +13,29 @@ public class ArrayStorage {
     private int size = 0;
 
     public void save(Resume r) {
-        if ((isExistsResume(String.valueOf(r)) == 0) & (arrayIsFull())) {
+        if (getIndex(r.getUuid()) != -1) {
+            System.out.println("Resume " + r.getUuid() + " already exist");
+        } else if (size == storage.length) {
+            System.out.println("Storage overflow");
+        } else
             storage[size] = r;
-            size++;
-            System.out.println("Резюме " + String.valueOf(r) + " сохранено");
-        }
+        size++;
     }
 
-    public void update(Resume r, Resume rNew) {
-        if (isExistsResume(String.valueOf(r)) == 1) {
-            for (int i = 0; i < size; i++) {
-                if (r.getUuid() == storage[i].getUuid()) {
-                    storage[i] = rNew;
-                }
-            }
-        }
+    public void update(Resume r) {
+        int index = getIndex(r.getUuid());
+        if (index == -1) {
+            System.out.println("Resume " + r.getUuid() + " not exist");
+        } else
+            storage[index] = r;
     }
 
     public void delete(String uuid) {
-        if (isExistsResume(String.valueOf(uuid)) == 1) {
-            for (int i = 0; i < size; i++) {
-                if (uuid == storage[i].getUuid()) {
-                    storage[i] = storage[size - 1];
-                    storage[size - 1] = null;
-                    size--;
-                }
-            }
+        int index = getIndex(uuid);
+        if (index != -1) {
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
         }
     }
 
@@ -48,15 +45,13 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        if (isExistsResume(String.valueOf(uuid)) == 1) {
-            for (int i = 0; i < size; i++) {
-             //   if (uuid == storage[i].getUuid()) {
-                    if (storage[i].getUuid().equals(uuid)) {
-                    return storage[i];
-                }
-            }
+        int index = getIndex(uuid);
+        if (index == -1) {
+            System.out.println("Resume " + uuid + " not exist");
+            return null;
+        } else {
+            return storage[index];
         }
-        return null;
     }
 
     /**
@@ -70,26 +65,11 @@ public class ArrayStorage {
         return size;
     }
 
-    public int isExistsResume(String uuid) {
-        int t = 0;
-        for (int i = 0; i < size; i++)
-            if (uuid == storage[i].getUuid()) {
-                t = 1;
-                System.out.println("Резюме " + uuid + " найдено");
-            }
-        if (t == 0) {
-            System.out.println("Резюме " + uuid + " не найдено");
+    private int getIndex(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i].getUuid().equals(uuid))
+                return i;
         }
-        return t;
-    }
-
-    public boolean arrayIsFull() {
-        if (size < storage.length) {
-            System.out.println("Доступно: " + Math.subtractExact(storage.length, size));
-            return true;
-        } else {
-            System.out.println("Свободного места нет");
-        }
-        return false;
+        return -1;
     }
 }
