@@ -8,17 +8,19 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
+    private static final int STORAGE_LIMIT = 10000;
+    private final Resume[] storage = new Resume[STORAGE_LIMIT];
 
     private int size = 0;
 
     public void save(Resume r) {
         if (getIndex(r.getUuid()) != -1) {
             System.out.println("Resume " + r.getUuid() + " already exist");
-        } else if (size == storage.length) {
+        } else if (size == STORAGE_LIMIT) {
             System.out.println("Storage overflow");
-        } else
+        } else {
             storage[size] = r;
+        }
         size++;
     }
 
@@ -26,16 +28,19 @@ public class ArrayStorage {
         int index = getIndex(r.getUuid());
         if (index == -1) {
             System.out.println("Resume " + r.getUuid() + " not exist");
-        } else
+        } else {
             storage[index] = r;
+        }
     }
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
-        if (index != -1) {
-            storage[index] = storage[size - 1];
-            storage[size - 1] = null;
+        if (index == -1) {
+            System.out.println("Resume " + uuid + " not exist");
+        } else {
             size--;
+            storage[index] = storage[size];
+            storage[size] = null;
         }
     }
 
@@ -58,7 +63,7 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
+        return Arrays.copyOfRange(storage, 0, size);
     }
 
     public int size() {
@@ -67,8 +72,9 @@ public class ArrayStorage {
 
     private int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid))
+            if (storage[i].getUuid() == uuid) {
                 return i;
+            }
         }
         return -1;
     }
