@@ -49,16 +49,6 @@ public class ArrayStorage extends AbstractArrayStorage {
         size = 0;
     }
 
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index == -1) {
-            System.out.println("Resume " + uuid + " not exist");
-            return null;
-        } else {
-            return storage[index];
-        }
-    }
-
     /**
      * @return array, contains only Resumes in storage (without null)
      */
@@ -66,7 +56,7 @@ public class ArrayStorage extends AbstractArrayStorage {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    private int getIndex(String uuid) {
+    protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid() == uuid) {
                 return i;
