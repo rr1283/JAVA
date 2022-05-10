@@ -2,17 +2,14 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.model.Resume;
 
-import java.util.Arrays;
-import java.util.Objects;
-
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage extends AbstractArrayStorage {
-    private static final int STORAGE_LIMIT = 10000;
-    private final Resume[] storage = new Resume[STORAGE_LIMIT];
+//    private static final int STORAGE_LIMIT = 10000;
+//    private final Resume[] storage = new Resume[STORAGE_LIMIT];
 
-    private int size = 0;
+//    private int size = 0;
 
     public void save(Resume r) {
         if (getIndex(r.getUuid()) != -1) {
@@ -23,15 +20,6 @@ public class ArrayStorage extends AbstractArrayStorage {
             storage[size] = r;
         }
         size++;
-    }
-
-    public void update(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index == -1) {
-            System.out.println("Resume " + r.getUuid() + " not exist");
-        } else {
-            storage[index] = r;
-        }
     }
 
     public void delete(String uuid) {
@@ -45,21 +33,9 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
     }
 
-    public void clear() {
-        Arrays.fill(storage, 0, size, null);
-        size = 0;
-    }
-
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
-    public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
-    }
-
     protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (uuid.equals(storage[i].getUuid())) {
+                if (uuid.equals(storage[i].getUuid())) {
                 return i;
             }
         }
