@@ -4,27 +4,19 @@ import com.basejava.webapp.model.Resume;
 
 import java.util.Arrays;
 
-import static java.lang.Math.*;
-
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     protected void saveResume(Resume r, int index) {
-        int i = abs(index) - 1;
-        if (!((i == 0) & (size == 0))) {
-            for (int t = size; t > i; t--) {
-                storage[t] = storage[t - 1];
-            }
-        }
-        storage[i] = r;
-        size++;
+        int insertIdx = -index - 1;
+        System.arraycopy(storage, insertIdx, storage, insertIdx + 1, size - insertIdx);
+        storage[insertIdx] = r;
     }
 
     protected void deleteResume(int index) {
-        for (int t = index; t < size; t++) {
-            storage[t] = storage[t + 1];
+        int numMoved = size - index - 1;
+        if (numMoved > 0) {
+            System.arraycopy(storage, index + 1, storage, index, numMoved);
         }
-        size--;
-        storage[size] = null;
     }
 
     @Override
