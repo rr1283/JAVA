@@ -1,6 +1,6 @@
 package com.basejava.webapp;
 
-public class mainString {
+public class MainString {
     public static void main(String[] args) {
         String[] strArray = new String[] {"1","2","3","4","5"};
         StringBuilder sb = new StringBuilder();
