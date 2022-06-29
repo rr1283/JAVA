@@ -11,9 +11,9 @@ import static com.basejava.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.fail;
 
-public abstract class AbstractArrayStorageTest {
+public class AbstractStorageTest {
 
-    final private Storage storage;
+    private Storage storage;
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -35,7 +35,7 @@ public abstract class AbstractArrayStorageTest {
         RESUME_3_UPDATE = new Resume(UUID_3);
     }
 
-    protected AbstractArrayStorageTest(Storage storage) {
+    protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
 

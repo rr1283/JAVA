@@ -6,43 +6,46 @@ import java.util.*;
 
 public class ListStorage extends AbstractStorage {
 
-    protected Collection<Resume> collection = new ArrayList<>();
+    protected List<Resume> collection = new ArrayList<>();
 
     @Override
-    public void save(Resume r) {
-        collection.add(r);
-    }
-
-    @Override
-    public Resume get(String uuid) {
-        for (Iterator<Resume> iterator = collection.iterator(); iterator.hasNext(); ) {
-            Resume r = iterator.next();
-            if (Objects.equals(r.getUuid(), uuid)) {
-                return r;
+    protected Integer findSearchKey(String uuid) {
+       // if(collection.isEmpty()) return 0;
+        for (int i = 0; i < collection.size(); i++) {
+            String uuid1 = collection.get(i).getUuid();
+            if (Objects.equals(uuid1, uuid)) {
+                return i;
             }
         }
         return null;
     }
 
     @Override
-    public void delete(String uuid) {
-        for (Iterator<Resume> iterator = collection.iterator(); iterator.hasNext(); ) {
-            Resume r = iterator.next();
-            if (Objects.equals(r.getUuid(), uuid)) {
-                iterator.remove();
-            }
-        }
+    protected boolean isExist(Object searchKey) {
+        return searchKey != null;
     }
 
     @Override
-    public void update(Resume r) {
-        for (Iterator<Resume> iterator = collection.iterator(); iterator.hasNext(); ) {
-            Resume r1 = iterator.next();
-            if (Objects.equals(r1, r)) {
-                iterator.remove();
-            }
-        }
+    protected void doSave(Resume r, Object searchKey) {
         collection.add(r);
+    }
+
+    @Override
+    protected void doDelete(Object searchKey) {
+        int key = (Integer) searchKey;
+        collection.remove(key);
+    }
+
+    @Override
+    protected Resume doGet(Object searchKey) {
+        int key = (Integer) searchKey;
+        return collection.get(key);
+    }
+
+    @Override
+    protected void doUpdate(Resume r, Object searchKey) {
+        int key = (Integer) searchKey;
+        collection.set(key, r);
     }
 
     @Override

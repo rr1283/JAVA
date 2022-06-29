@@ -14,12 +14,14 @@ public class MainTestListStorage {
         Resume r5 = new Resume("uuid5");
         Resume r7 = new Resume("uuid7");
 
+        System.out.println("save");
         LIST_STORAGE.save(r7);
         LIST_STORAGE.save(r2);
         LIST_STORAGE.save(r3);
         LIST_STORAGE.save(r5);
         LIST_STORAGE.save(r1);
-        LIST_STORAGE.save(r5);
+       // LIST_STORAGE.save(r5);
+        System.out.println("save");
 
         LIST_STORAGE.update(r5);
         System.out.println("update");
@@ -28,7 +30,7 @@ public class MainTestListStorage {
 
         System.out.println("Get r1: " + LIST_STORAGE.get(r1.getUuid()));
 
-        System.out.println("Get dummy: " + LIST_STORAGE.get("dummy"));
+       // System.out.println("Get dummy: " + LIST_STORAGE.get("dummy"));
 
         printAll();
 

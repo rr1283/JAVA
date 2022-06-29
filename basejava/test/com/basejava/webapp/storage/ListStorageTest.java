@@ -1,6 +1,6 @@
 package com.basejava.webapp.storage;
 
-public abstract class ListStorageTest extends AbstractArrayStorageTest {
+public class ListStorageTest extends AbstractStorageTest {
 
     private static final Storage storage = new ListStorage();
 
