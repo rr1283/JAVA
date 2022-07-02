@@ -1,7 +1,5 @@
 package com.basejava.webapp.storage;
 
-import com.basejava.webapp.exception.ExistStorageException;
-import com.basejava.webapp.exception.NotExistStorageException;
 import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
 
@@ -27,20 +25,14 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size = 0;
     }
 
-
     @Override
-    public boolean isExist(Object index){
+    public boolean isExist(Object index) {
         return (Integer) index >= 0;
-    };
+    }
 
     @Override
     public void doUpdate(Resume r, Object index) {
-      //  int index = getIndex(r.getUuid());
-        if ((Integer) index < 0) {
-            throw new NotExistStorageException(r.getUuid());
-        } else {
-            storage[(Integer) index] = r;
-        }
+        storage[(Integer) index] = r;
     }
 
     /**
@@ -50,35 +42,24 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-
     @Override
     public void doSave(Resume r, Object index) {
-      //  int index = getIndex(r.getUuid());
-        if ((Integer) index >= 0) {
-            throw new ExistStorageException(r.getUuid());
-        } else if (size == STORAGE_LIMIT) {
+        if (size == STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", r.getUuid());
         } else {
             insertElement(r, (Integer) index);
             size++;
         }
     }
+
     @Override
     public void doDelete(Object index) {
-        if ((Integer) index < 0) {
-            throw new NotExistStorageException(index.toString());
-        } else {
-            fillDeletedElement((Integer) index);
-            storage[size - 1] = null;
-            size--;
-        }
+        fillDeletedElement((Integer) index);
+        storage[size - 1] = null;
+        size--;
     }
 
     public Resume doGet(Object index) {
-        //int index = getIndex(uuid);
-        if ((Integer) index < 0) {
-            throw new NotExistStorageException(index.toString());
-        }
         return storage[(Integer) index];
     }
 

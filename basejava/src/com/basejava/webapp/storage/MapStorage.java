@@ -4,16 +4,16 @@ import com.basejava.webapp.model.Resume;
 
 import java.util.*;
 
-public class ListStorage extends AbstractStorage {
+public class MapStorage extends AbstractStorage {
 
-    protected List<Resume> collection = new ArrayList<>();
+    protected Map<String, Resume> collection = new HashMap<>();
 
     @Override
-    protected Integer findSearchKey(String uuid) {
-        for (int i = 0; i < collection.size(); i++) {
-            String uuid1 = collection.get(i).getUuid();
+    protected String findSearchKey(String uuid) {
+        for (Map.Entry<String, Resume> entry : collection.entrySet()) {
+            String uuid1 = entry.getValue().getUuid();
             if (Objects.equals(uuid1, uuid)) {
-                return i;
+                return uuid;
             }
         }
         return null;
@@ -26,25 +26,25 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected void doSave(Resume r, Object searchKey) {
-        collection.add(r);
+        String key = r.getUuid();
+        collection.put(key, r);
     }
 
     @Override
     protected void doDelete(Object searchKey) {
-        int key = (Integer) searchKey;
+        String key = (String) searchKey;
         collection.remove(key);
     }
 
     @Override
     protected Resume doGet(Object searchKey) {
-        int key = (Integer) searchKey;
+        String key = (String) searchKey;
         return collection.get(key);
     }
 
     @Override
     protected void doUpdate(Resume r, Object searchKey) {
-        int key = (Integer) searchKey;
-        collection.set(key, r);
+        collection.replace((String) searchKey, r);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public Resume[] getAll() {
-        return collection.toArray(new Resume[collection.size()]);
+        return collection.values().toArray(new Resume[collection.size()]);
     }
 
     @Override

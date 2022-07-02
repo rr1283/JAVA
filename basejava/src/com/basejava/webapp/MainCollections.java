@@ -24,7 +24,7 @@ public class MainCollections {
         collection.add(RESUME_3);
 
         for (Resume r : collection) {
-            System.out.println(r);
+          //  System.out.println(r);
             if (Objects.equals(r.getUuid(), UUID_1)) {
 //                collection.remove(r);
             }
@@ -33,12 +33,12 @@ public class MainCollections {
         Iterator<Resume> iterator = collection.iterator();
         while (iterator.hasNext()) {
             Resume r = iterator.next();
-            System.out.println(r);
+           // System.out.println(r);
             if (Objects.equals(r.getUuid(), UUID_1)) {
                 iterator.remove();
             }
         }
-        System.out.println(collection.toString());
+      //  System.out.println(collection.toString());
 
 
         Map<String, Resume> map = new HashMap<>();
@@ -48,7 +48,7 @@ public class MainCollections {
 
         // Bad!
         for (String uuid : map.keySet()) {
-            System.out.println(map.get(uuid));
+           // System.out.println(map.get(uuid));
         }
 
         for (Map.Entry<String, Resume> entry : map.entrySet()) {
