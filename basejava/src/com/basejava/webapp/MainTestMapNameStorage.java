@@ -1,11 +1,12 @@
 package com.basejava.webapp;
 
 import com.basejava.webapp.model.Resume;
+import com.basejava.webapp.storage.MapNameStorage;
 import com.basejava.webapp.storage.MapUuidStorage;
 
-public class MainTestMapStorage {
+public class MainTestMapNameStorage {
 
-    static final MapUuidStorage MAP_STORAGE = new MapUuidStorage();
+    static final MapNameStorage MAP_STORAGE = new MapNameStorage();
 
     public static void main(String[] args) {
         Resume r1 = new Resume("uuid1","Иванов Иван Иванович");
@@ -22,7 +23,7 @@ public class MainTestMapStorage {
         MAP_STORAGE.save(r1);
         //  MAP_STORAGE.save(r5);
         System.out.println("save");
-
+        printAll();
         MAP_STORAGE.update(r5);
         System.out.println("update");
 

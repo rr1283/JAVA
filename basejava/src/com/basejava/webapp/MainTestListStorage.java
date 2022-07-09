@@ -8,11 +8,11 @@ public class MainTestListStorage {
     static final ListStorage LIST_STORAGE = new ListStorage();
 
     public static void main(String[] args) {
-        Resume r1 = new Resume("uuid1");
-        Resume r2 = new Resume("uuid2");
-        Resume r3 = new Resume("uuid3");
-        Resume r5 = new Resume("uuid5");
-        Resume r7 = new Resume("uuid7");
+        Resume r1 = new Resume("uuid1","Иванов Иван Иванович");
+        Resume r2 = new Resume("uuid2","Петров Иван Иванович");
+        Resume r3 = new Resume("uuid3","Смирнов Иван Иванович");
+        Resume r5 = new Resume("uuid5","Синий Иван Иванович");
+        Resume r7 = new Resume("uuid7","Красный Иван Иванович");
 
         System.out.println("save");
         LIST_STORAGE.save(r7);
@@ -45,7 +45,7 @@ public class MainTestListStorage {
 
     static void printAll() {
         System.out.println("\nGet All");
-        for (Resume r : LIST_STORAGE.getAll()) {
+        for (Resume r : LIST_STORAGE.doGetAllSorted()) {
             System.out.println(r);
         }
     }
