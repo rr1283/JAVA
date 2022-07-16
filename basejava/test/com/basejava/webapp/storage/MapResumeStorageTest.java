@@ -1,10 +1,10 @@
 package com.basejava.webapp.storage;
 
-public class MapNameStorageTest extends AbstractStorageTest {
+public class MapResumeStorageTest extends AbstractStorageTest {
 
     private static final Storage storage = new MapUuidStorage();
 
-    public MapNameStorageTest() {
+    public MapResumeStorageTest() {
         super(storage);
     }
 }

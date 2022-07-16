@@ -1,12 +1,11 @@
 package com.basejava.webapp;
 
 import com.basejava.webapp.model.Resume;
-import com.basejava.webapp.storage.MapNameStorage;
-import com.basejava.webapp.storage.MapUuidStorage;
+import com.basejava.webapp.storage.MapResumeStorage;
 
-public class MainTestMapNameStorage {
+public class MainTestMapResumeStorage {
 
-    static final MapNameStorage MAP_STORAGE = new MapNameStorage();
+    static final MapResumeStorage MAP_STORAGE = new MapResumeStorage();
 
     public static void main(String[] args) {
         Resume r1 = new Resume("uuid1","Иванов Иван Иванович");

@@ -40,7 +40,7 @@ public class AbstractStorageTest {
         RESUME_2 = new Resume(UUID_2,FULL_NAME2);
         RESUME_3 = new Resume(UUID_3,FULL_NAME3);
         RESUME_4 = new Resume(UUID_4,FULL_NAME4);
-        RESUME_3_UPDATE = new Resume(UUID_3,FULL_NAME3);
+        RESUME_3_UPDATE = new Resume(UUID_3,FULL_NAME5);
     }
 
     protected AbstractStorageTest(Storage storage) {
@@ -75,6 +75,7 @@ public class AbstractStorageTest {
     public void getAllSorted() throws Exception {
         List<Resume> expected = Arrays.asList(RESUME_1, RESUME_2, RESUME_3);
         List<Resume> actual = storage.getAllSorted();
+        assertEquals(3, storage.size());
         assertEquals(actual, expected);
     }
 

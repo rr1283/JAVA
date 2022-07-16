@@ -4,7 +4,7 @@ import com.basejava.webapp.model.Resume;
 
 import java.util.*;
 
-public class MapUuidStorage extends AbstractStorage {
+public class MapUuidStorage extends AbstractStorage<String> {
 
     protected Map<String, Resume> storage = new HashMap<>();
 
@@ -14,19 +14,19 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object uuid) {
-        return storage.containsKey((String) uuid);
+    protected boolean isExist(String uuid) {
+        return storage.containsKey(uuid);
     }
 
     @Override
-    protected void doSave(Resume r, Object searchKey) {
+    protected void doSave(Resume r, String searchKey) {
         String key = searchKey.toString();
         storage.put(key, r);
     }
 
     @Override
-    protected void doDelete(Object searchKey) {
-        String key = (String) searchKey;
+    protected void doDelete(String searchKey) {
+        String key = searchKey;
         storage.remove(key);
     }
 
@@ -36,25 +36,20 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume doGet(Object searchKey) {
-        String key = (String) searchKey;
+    protected Resume doGet(String searchKey) {
+        String key = searchKey;
         return storage.get(key);
     }
 
     @Override
-    protected void doUpdate(Resume r, Object searchKey) {
-        storage.replace((String) searchKey, r);
+    protected void doUpdate(Resume r, String searchKey) {
+        storage.replace(searchKey, r);
     }
 
     @Override
     public void clear() {
         storage.clear();
     }
-
-  //  @Override
-  //  public Resume[] getAll() {
- //       return storage.values().toArray(new Resume[0]);
-  //  }
 
     @Override
     public int size() {
