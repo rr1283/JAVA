@@ -5,7 +5,6 @@ import java.util.Objects;
 
 public class Organization {
     private final Link homePage;
-
     private final LocalDate startDate;
     private final LocalDate endDate;
     private final String title;
@@ -34,7 +33,6 @@ public class Organization {
         if (!endDate.equals(that.endDate)) return false;
         if (!title.equals(that.title)) return false;
         return description != null ? description.equals(that.description) : that.description == null;
-
     }
 
     @Override

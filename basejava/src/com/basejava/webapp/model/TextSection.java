@@ -27,7 +27,6 @@ public class TextSection extends Section {
         TextSection that = (TextSection) o;
 
         return content.equals(that.content);
-
     }
 
     @Override
