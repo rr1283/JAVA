@@ -1,24 +1,24 @@
 package com.basejava.webapp.model;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Organization {
-    private final Link homePage;
-    private final LocalDate startDate;
-    private final LocalDate endDate;
-    private final String title;
-    private final String description;
 
-    public Organization(String name, String url, LocalDate startDate, LocalDate endDate, String title, String description) {
-        Objects.requireNonNull(startDate, "startDate must not be null");
-        Objects.requireNonNull(endDate, "endDate must not be null");
-        Objects.requireNonNull(title, "title must not be null");
-        this.homePage = new Link(name, url);
-        this.startDate = startDate;
-        this.endDate = endDate;
+    private final String title;
+    private final String website;
+    private List<Period> periods = new ArrayList<>();
+
+    public Organization(String title, String website, Period... periods) {
+        this(title, website, Arrays.asList(periods));
+    }
+
+    public Organization(String title, String website, List<Period> periods) {
         this.title = title;
-        this.description = description;
+        this.website = website;
+        this.periods = periods;
     }
 
     @Override
@@ -28,31 +28,25 @@ public class Organization {
 
         Organization that = (Organization) o;
 
-        if (!homePage.equals(that.homePage)) return false;
-        if (!startDate.equals(that.startDate)) return false;
-        if (!endDate.equals(that.endDate)) return false;
-        if (!title.equals(that.title)) return false;
-        return description != null ? description.equals(that.description) : that.description == null;
+        if (!Objects.equals(title, that.title)) return false;
+        if (!Objects.equals(website, that.website)) return false;
+        return Objects.equals(periods, that.periods);
     }
 
     @Override
     public int hashCode() {
-        int result = homePage.hashCode();
-        result = 31 * result + startDate.hashCode();
-        result = 31 * result + endDate.hashCode();
-        result = 31 * result + title.hashCode();
-        result = 31 * result + (description != null ? description.hashCode() : 0);
+        int result = title != null ? title.hashCode() : 0;
+        result = 31 * result + (website != null ? website.hashCode() : 0);
+        result = 31 * result + (periods != null ? periods.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "Organization{" +
-                "homePage=" + homePage +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
+                "name='" + title + '\'' +
+                ", website='" + website + '\'' +
+                ", periods=" + periods +
                 '}';
     }
 }

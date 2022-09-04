@@ -50,5 +50,4 @@ public class MainTestMapResumeStorage {
             System.out.println(r);
         }
     }
-
 }
