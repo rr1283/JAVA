@@ -8,7 +8,7 @@ public class MainFile {
 
         File dir = new File("./basejava/src/com/basejava/webapp");
 
-//        String filePath = "./basejava/src/com/basejava/webapp";
+        String filePath = "./basejava/src/com/basejava/webapp";
 //        String filePath = ".\\.gitignore";
 //        String filePath = ".\\.gitignore";
 //        File dir = new File("./basejava/src/com/basejava/webapp");
@@ -20,7 +20,7 @@ public class MainFile {
 //            throw new RuntimeException("Error", e);
 //        }
 //
-
+//
 //        System.out.println(dir.isDirectory());
 //        String[] list = dir.list();
 //        if (list != null) {
@@ -28,7 +28,7 @@ public class MainFile {
 //                System.out.println(name);
 //            }
 //        }
-
+//
 //        try (FileInputStream fis = new FileInputStream(filePath)) {
 //            System.out.println(fis.read());
 //        } catch (IOException e) {
@@ -45,9 +45,10 @@ public class MainFile {
             for (File name : file) {
                 if (name.isFile()) {
                     System.out.println(name.getPath());
-                } else if (name.isDirectory())
+                } else if (name.isDirectory()) {
                     System.out.println(name.getPath());
-                printFile(name);
+                    printFile(name);
+                }
             }
         }
     }

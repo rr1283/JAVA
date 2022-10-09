@@ -1,110 +1,79 @@
 package com.basejava.webapp;
 
 import com.basejava.webapp.model.*;
-import com.basejava.webapp.storage.MapResumeStorage;
 
 import java.time.Month;
 
+import static com.basejava.webapp.model.ContactType.*;
+import static com.basejava.webapp.model.SectionType.*;
+
 public class ResumeTestData {
 
-    static final MapResumeStorage MAP_STORAGE = new MapResumeStorage();
+    public static void getFilledResume(String uuid, String full_name) {
 
-    public static void main(String[] args) {
+        final Resume RESUME;
+        final String UUID = uuid;
+        final String FULL_NAME = full_name;
 
-        final String UUID_1 = "uuid1";
-        final String UUID_2 = "uuid2";
-        final String UUID_3 = "uuid3";
-        final String UUID_4 = "uuid4";
+        RESUME = new Resume(UUID, FULL_NAME);
 
-        final String FULL_NAME1 = "Иванов Иван Иванович";
-        final String FULL_NAME2 = "Петров Иван Иванович";
-        final String FULL_NAME3 = "Смирнов Иван Иванович";
-        final String FULL_NAME4 = "Синий Иван Иванович";
+        RESUME.addContact(ContactType.SKYPE, "RomanPodkin");
+        RESUME.addContact(GITHUB, "www.github.ru");
+        RESUME.addContact(HOME_PAGE, "www.romanpodkin.ru");
+        RESUME.addContact(LINKEDIN, "www.Linkedin.ru");
+        RESUME.addContact(MAIL, "prv@mail.ru");
+        RESUME.addContact(MOBILE, "+7(925) 614-60-44");
+        RESUME.addContact(STACKOVERFLOW, "www.Stackoverflow.ru");
+        RESUME.addContact(PHONE, "");
+        RESUME.addContact(HOME_PHONE, "+7(495) 222-22-22");
 
-        final Resume RESUME_1;
-        final Resume RESUME_2;
-        final Resume RESUME_3;
-        final Resume RESUME_4;
-
-        RESUME_1 = new Resume(UUID_1, FULL_NAME1);
-        RESUME_1.addSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
-        RESUME_1.addSection(SectionType.PERSONAL, new TextSection("Personal1"));
-        RESUME_1.addSection(SectionType.ACHIEVEMENT, new ListSection("Achievement1", "Achievement2"));
-        //   RESUME_1.addSection(SectionType.QUALIFICATIONS, new ListSection("Qualifications1","Qualifications2"));
-        RESUME_1.addSection(SectionType.EXPERIENCE, new OrganizationSection(
-                new Organization("Organization11",
-                        "http://Organization11.ru",
-                        new Period(1996, Month.JANUARY,
-                                2000, Month.DECEMBER,
-                                "position1",
-                                "content1"),
-                        new Period(2001, Month.MARCH,
-                                2005, Month.JANUARY,
-                                "position2",
-                                "content2")
+        RESUME.addSection(SectionType.OBJECTIVE, new TextSection("Java Developer"));
+        RESUME.addSection(SectionType.PERSONAL, new TextSection("Инициативность, обучаемость"));
+        RESUME.addSection(SectionType.ACHIEVEMENT, new ListSection("Достижение1", "Достижение2"));
+        RESUME.addSection(SectionType.QUALIFICATIONS, new ListSection("Qualifications1", "Qualifications2"));
+        RESUME.addSection(SectionType.EXPERIENCE, new OrganizationSection(
+                new Organization("ВТБ", "www.vtb.ru",
+                        new Period(2000, Month.JANUARY, 2005, Month.DECEMBER, "PL/SQL Developer",
+                                "Разработка серверной части приложения. Ревью кода. Администрирование БД Oracle 19"),
+                        new Period(2005, Month.MARCH, 2007, Month.JANUARY, "Team Lead Группы разработки",
+                                "Python, Java, Oracle, Postgres")
                 )));
-        RESUME_1.addSection(SectionType.EDUCATION,
+        RESUME.addSection(SectionType.EXPERIENCE, new OrganizationSection(
+                new Organization("ПАО Сбербанк", "www.sberbank.ru",
+                        new Period(2007, Month.MARCH, 2011, Month.JANUARY, "Java Developer",
+                                "Разработка web приложений. Оптимизация кода")
+                )));
+        RESUME.addSection(SectionType.EDUCATION,
                 new OrganizationSection(
-                        new Organization("Institute",
-                                null,
-                                new Period(1996, Month.JANUARY,
-                                        2000, Month.DECEMBER,
-                                        "aspirant",
-                                        null),
-                                new Period(2001, Month.MARCH,
-                                        2005, Month.JANUARY,
-                                        "student",
-                                        "IT facultet")),
-                        new Organization("Organization12",
-                                "http://Organization12.ru")));
+                        new Organization("МГУ", "www.mgu.ru",
+                                new Period(2000, Month.JANUARY, 2005, Month.DECEMBER, "Студент",
+                                        "Информатика, вычислительные машины и комплексы"),
+                                new Period(2005, Month.MARCH, 2011, Month.JANUARY, "Аспирант",
+                                        "Информатика, вычислительные машины и комплексы")),
+                        new Organization("МГТУ", "www.mgtu.ru")));
 
-        RESUME_1.addContact(ContactType.SKYPE, "skype2");
-        RESUME_1.addContact(ContactType.PHONE, "22222");
-        RESUME_1.addSection(SectionType.EXPERIENCE,
-                new OrganizationSection(
-                        new Organization("Organization3", "http://Organization3.ru",
-                                new Period(2001, Month.MARCH,
-                                        2005, Month.JANUARY,
-                                        "position3",
-                                        "content3"))));
-
-        RESUME_2 = new Resume(UUID_2, FULL_NAME2);
-        RESUME_3 = new Resume(UUID_3, FULL_NAME3);
-        RESUME_4 = new Resume(UUID_4, FULL_NAME4);
-
-        System.out.println("save");
-        MAP_STORAGE.save(RESUME_1);
-        MAP_STORAGE.save(RESUME_2);
-        MAP_STORAGE.save(RESUME_3);
-        MAP_STORAGE.save(RESUME_4);
-
-        System.out.println("save");
-        printAll();
-        MAP_STORAGE.update(RESUME_3);
-        System.out.println("update");
-
-        System.out.println("Size: " + MAP_STORAGE.size());
-//
-        System.out.println("Get r1: " + MAP_STORAGE.get(RESUME_1.getUuid()));
-//
-        //  System.out.println("Get dummy: " + MAP_STORAGE.get("dummy"));
-//
-        printAll();
-//
-        MAP_STORAGE.delete(RESUME_1.getUuid());
-        System.out.println("delete r1");
-        System.out.println("Size: " + MAP_STORAGE.size());
-        printAll();
-        MAP_STORAGE.clear();
-        printAll();
-//
-        System.out.println("Size: " + MAP_STORAGE.size());
+        //  printResume(RESUME);
     }
 
-    static void printAll() {
-        System.out.println("\nGet All");
-        for (Resume r : MAP_STORAGE.getAllSorted()) {
-            System.out.println(r);
-        }
+    static void printResume(Resume Resume) throws NullPointerException {
+        Resume r = Resume;
+
+        System.out.println(r.toString());
+        System.out.println(PHONE.getTitle() + ": " + r.getContact(PHONE));
+        System.out.println(MOBILE.getTitle() + ": " + r.getContact(MOBILE));
+        System.out.println(HOME_PHONE.getTitle() + ": " + r.getContact(HOME_PHONE));
+        System.out.println(SKYPE.getTitle() + ": " + r.getContact(SKYPE));
+        System.out.println(MAIL.getTitle() + ": " + r.getContact(MAIL));
+        System.out.println(LINKEDIN.getTitle() + ": " + r.getContact(LINKEDIN));
+        System.out.println(GITHUB.getTitle() + ": " + r.getContact(GITHUB));
+        System.out.println(STACKOVERFLOW.getTitle() + ": " + r.getContact(STACKOVERFLOW));
+        System.out.println(HOME_PAGE.getTitle() + ": " + r.getContact(HOME_PAGE));
+        System.out.println(QUALIFICATIONS.getTitle() + ": " + r.getSection(QUALIFICATIONS));
+        System.out.println(ACHIEVEMENT.getTitle() + ": " + r.getSection(ACHIEVEMENT));
+        System.out.println(OBJECTIVE.getTitle() + ": " + r.getSection(OBJECTIVE));
+        System.out.println(EXPERIENCE.getTitle() + ": " + r.getSection(EXPERIENCE));
+        System.out.println(EDUCATION.getTitle() + ": " + r.getSection(EDUCATION));
+        System.out.println(PERSONAL.getTitle() + ": " + r.getSection(PERSONAL));
     }
 }
+

@@ -1,7 +1,6 @@
 package com.basejava.webapp.storage;
 
 import com.basejava.webapp.exception.NotExistStorageException;
-import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,12 +9,18 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.basejava.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class AbstractStorageTest {
 
-    private Storage storage;
+    static {
+        // ResumeTestData.getFilledResume(UUID_1,FULL_NAME1);
+        RESUME_1 = new Resume(UUID_1, FULL_NAME1);
+        RESUME_2 = new Resume(UUID_2, FULL_NAME2);
+        RESUME_3 = new Resume(UUID_3, FULL_NAME3);
+        RESUME_4 = new Resume(UUID_4, FULL_NAME4);
+        RESUME_3_UPDATE = new Resume(UUID_3, FULL_NAME5);
+    }
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -35,13 +40,7 @@ public class AbstractStorageTest {
     private static final Resume RESUME_4;
     private static final Resume RESUME_3_UPDATE;
 
-    static {
-        RESUME_1 = new Resume(UUID_1,FULL_NAME1);
-        RESUME_2 = new Resume(UUID_2,FULL_NAME2);
-        RESUME_3 = new Resume(UUID_3,FULL_NAME3);
-        RESUME_4 = new Resume(UUID_4,FULL_NAME4);
-        RESUME_3_UPDATE = new Resume(UUID_3,FULL_NAME5);
-    }
+    private final Storage storage;
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;

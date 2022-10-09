@@ -21,6 +21,14 @@ public class Organization {
         this.periods = periods;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -44,7 +52,7 @@ public class Organization {
     @Override
     public String toString() {
         return "Organization{" +
-                "name='" + title + '\'' +
+                "title='" + title + '\'' +
                 ", website='" + website + '\'' +
                 ", periods=" + periods +
                 '}';
