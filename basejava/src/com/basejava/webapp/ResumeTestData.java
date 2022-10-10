@@ -9,13 +9,11 @@ import static com.basejava.webapp.model.SectionType.*;
 
 public class ResumeTestData {
 
-    public static void getFilledResume(String uuid, String full_name) {
+    public static Resume getFilledResume(String uuid, String fullname) {
 
         final Resume RESUME;
-        final String UUID = uuid;
-        final String FULL_NAME = full_name;
 
-        RESUME = new Resume(UUID, FULL_NAME);
+        RESUME = new Resume(uuid, fullname);
 
         RESUME.addContact(ContactType.SKYPE, "RomanPodkin");
         RESUME.addContact(GITHUB, "www.github.ru");
@@ -52,7 +50,8 @@ public class ResumeTestData {
                                         "Информатика, вычислительные машины и комплексы")),
                         new Organization("МГТУ", "www.mgtu.ru")));
 
-        //  printResume(RESUME);
+        // printResume(RESUME);
+        return RESUME;
     }
 
     static void printResume(Resume Resume) throws NullPointerException {

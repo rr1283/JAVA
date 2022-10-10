@@ -1,5 +1,6 @@
 package com.basejava.webapp.storage;
 
+import com.basejava.webapp.ResumeTestData;
 import com.basejava.webapp.exception.NotExistStorageException;
 import com.basejava.webapp.model.Resume;
 import org.junit.Assert;
@@ -11,35 +12,22 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class AbstractStorageTest {
-
-    static {
-        // ResumeTestData.getFilledResume(UUID_1,FULL_NAME1);
-        RESUME_1 = new Resume(UUID_1, FULL_NAME1);
-        RESUME_2 = new Resume(UUID_2, FULL_NAME2);
-        RESUME_3 = new Resume(UUID_3, FULL_NAME3);
-        RESUME_4 = new Resume(UUID_4, FULL_NAME4);
-        RESUME_3_UPDATE = new Resume(UUID_3, FULL_NAME5);
-    }
-
+public abstract class AbstractStorageTest {
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
     private static final String UUID_NOT_EXIST = "dummy";
-
     private static final String FULL_NAME1 = "Иванов Иван Иванович";
     private static final String FULL_NAME2 = "Петров Иван Иванович";
     private static final String FULL_NAME3 = "Смирнов Иван Иванович";
     private static final String FULL_NAME4 = "Синий Иван Иванович";
     private static final String FULL_NAME5 = "Красный Иван Иванович";
-
-    private static final Resume RESUME_1;
-    private static final Resume RESUME_2;
-    private static final Resume RESUME_3;
-    private static final Resume RESUME_4;
-    private static final Resume RESUME_3_UPDATE;
-
+    private static final Resume RESUME_1 = ResumeTestData.getFilledResume(UUID_1, FULL_NAME1);
+    private static final Resume RESUME_2 = ResumeTestData.getFilledResume(UUID_2, FULL_NAME2);
+    private static final Resume RESUME_3 = ResumeTestData.getFilledResume(UUID_3, FULL_NAME3);
+    private static final Resume RESUME_4 = ResumeTestData.getFilledResume(UUID_4, FULL_NAME4);
+    private static final Resume RESUME_3_UPDATE = ResumeTestData.getFilledResume(UUID_3, FULL_NAME5);
     private final Storage storage;
 
     protected AbstractStorageTest(Storage storage) {
