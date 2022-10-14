@@ -5,8 +5,12 @@ import com.basejava.webapp.model.Resume;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public abstract class AbstractFileStorage extends AbstractStorage<File> {
     private final File directory;
@@ -32,7 +36,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public int size() {
-        return (int) (directory.getTotalSpace() - directory.getFreeSpace());
+        try (Stream<Path> files = Files.list(Paths.get(directory.getAbsolutePath()))) {
+            return (int) files.count();
+        } catch (IOException e) {
+            throw new StorageException("IO error", directory.getName(), e);
+        }
     }
 
     @Override
