@@ -5,12 +5,24 @@ import com.basejava.webapp.model.Resume;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
+
+//        clear
+//        file назови files
+//        files обязательно проверяй на null, так как если файлов не будет, то вернётся массив,
+//        состоящий из нуля элементов, по которому можно итерироваться. А null вылетит если в
+//        файловой системе что-то пошло не так - в этом случае бросай StorageException
+//        size
+//        Сделай просто directory.listFiles, проверь его по аналогии на null, и так как это массив, то вернуть можно length
+//        doDelete
+//        Если файл не был удалён - бросай StorageException
+//        doGet
+//        Нужно десериализовать резюме при помощи doRead, и обработать исключение
+//        doGetAllSorted
+//        Нужно десереализовать все резюме через doGet, и составить из них список
+
 
 public abstract class AbstractFileStorage extends AbstractStorage<File> {
     private final File directory;
@@ -26,21 +38,28 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         this.directory = directory;
     }
 
+    protected abstract void doWrite(Resume r, File file) throws IOException;
+
+    protected abstract Resume doRead(File file) throws IOException;
+
     @Override
     public void clear() {
-        File[] file = directory.listFiles();
-        for (File f : file) {
+        File[] files = directory.listFiles();
+        if (files == null) {
+            throw new StorageException("Clear error", null);
+        }
+        for (File f : files) {
             doDelete(f);
         }
     }
 
     @Override
     public int size() {
-        try (Stream<Path> files = Files.list(Paths.get(directory.getAbsolutePath()))) {
-            return (int) files.count();
-        } catch (IOException e) {
-            throw new StorageException("IO error", directory.getName(), e);
+        File[] files = directory.listFiles();
+        if (files == null) {
+            throw new StorageException("Get size error", null);
         }
+        return files.length;
     }
 
     @Override
@@ -49,8 +68,12 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected void doUpdate(Resume r, File file) throws IOException {
-        doWrite(r, file);
+    protected void doUpdate(Resume r, File file) {
+        try {
+            doWrite(r, file);
+        } catch (IOException e) {
+            throw new StorageException("Write error", r.getUuid(), e);
+        }
     }
 
     @Override
@@ -68,20 +91,30 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         }
     }
 
-    protected abstract void doWrite(Resume r, File file) throws IOException;
-
-    @Override
-    protected Resume doGet(File file) {
-        return null;
+    protected Resume doGet(Resume r, File file) {
+        try {
+            return doRead(file);
+        } catch (IOException e) {
+            throw new StorageException("Get error", file.getName(), e);
+        }
     }
 
-    @Override
     protected void doDelete(File file) {
-        file.delete();
+        if (!file.delete()) {
+            throw new StorageException("Delete error", file.getName());
+        }
     }
 
     @Override
     protected List<Resume> doGetAllSorted() {
-        return null;
+        File[] files = directory.listFiles();
+        if (files == null) {
+            throw new StorageException("GetAll error", null);
+        }
+        List<Resume> list = new ArrayList<>();
+        for (File f : files) {
+            list.add(doGet(f));
+        }
+        return list;
     }
 }
