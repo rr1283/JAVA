@@ -3,16 +3,18 @@ package com.basejava.webapp.storage;
 import com.basejava.webapp.ResumeTestData;
 import com.basejava.webapp.exception.NotExistStorageException;
 import com.basejava.webapp.model.Resume;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractStorageTest {
+    protected static final File STORAGE_DIR = new File("C:\\Users\\Roman\\Desktop\\storageDir");
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -56,7 +58,8 @@ public abstract class AbstractStorageTest {
     public void update() throws Exception {
         assertGet(RESUME_3);
         storage.update(RESUME_3_UPDATE);
-        Assert.assertSame(RESUME_3_UPDATE, storage.get(UUID_3));
+        // Assert.assertSame(RESUME_3_UPDATE, storage.get(UUID_3));
+        assertTrue(RESUME_3_UPDATE.equals(storage.get(UUID_3)));
     }
 
     @Test
