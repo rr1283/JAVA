@@ -2,6 +2,7 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.model.Resume;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public interface Storage {
 
-    void clear();
+    void clear() throws IOException;
 
     void update(Resume r);
 

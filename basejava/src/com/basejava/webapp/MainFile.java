@@ -35,19 +35,19 @@ public class MainFile {
 //            throw new RuntimeException(e);
 //        }
 
-        printFile(dir);
+        printFile(dir, "");
     }
 
-    public static void printFile(File dir) throws IOException {
+    public static void printFile(File dir, String offset) throws IOException {
         File[] file = dir.listFiles();
 
         if (file != null) {
             for (File name : file) {
                 if (name.isFile()) {
-                    System.out.println(name.getPath());
+                    System.out.println(offset + "file: " + name.getName());
                 } else if (name.isDirectory()) {
-                    System.out.println(name.getPath());
-                    printFile(name);
+                    System.out.println(offset + "dir: " + name.getName());
+                    printFile(name, offset + "  ");
                 }
             }
         }
