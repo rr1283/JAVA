@@ -50,7 +50,7 @@ public abstract class AbstractStorageTest {
         assertSize(3);
     }
 
-    public void assertSize(int num) {
+    public void assertSize(int num) throws Exception {
         assertEquals(num, storage.size());
     }
 

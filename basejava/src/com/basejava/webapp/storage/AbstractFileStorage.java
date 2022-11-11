@@ -22,16 +22,13 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         this.directory = directory;
     }
 
-    protected abstract void doWrite(Resume r, BufferedOutputStream os) throws IOException;
+    protected abstract void doWrite(Resume r, OutputStream os) throws IOException;
 
     protected abstract Resume doRead(InputStream is) throws IOException;
 
     @Override
     public void clear() {
-        File[] files = directory.listFiles();
-        if (files == null) {
-            throw new StorageException("Clear error", null);
-        }
+        File[] files = getArrayFiles(directory);
         for (File f : files) {
             doDelete(f);
         }
@@ -39,10 +36,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public int size() {
-        File[] files = directory.listFiles();
-        if (files == null) {
-            throw new StorageException("Get size error", null);
-        }
+        File[] files = getArrayFiles(directory);
         return files.length;
     }
 
@@ -69,10 +63,10 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     protected void doSave(Resume r, File file) {
         try {
             file.createNewFile();
-            doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
-            throw new StorageException("IO error", file.getName(), e);
+            throw new StorageException("Couldn't create file " + file.getAbsolutePath(), file.getName(), e);
         }
+        doUpdate(r, file);
     }
 
     protected Resume doGet(File file) {
@@ -91,14 +85,19 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected List<Resume> doGetAllSorted() {
-        File[] files = directory.listFiles();
-        if (files == null) {
-            throw new StorageException("GetAll error", null);
-        }
+        File[] files = getArrayFiles(directory);
         List<Resume> list = new ArrayList<>(files.length);
         for (File f : files) {
             list.add(doGet(f));
         }
         return list;
+    }
+
+    public File[] getArrayFiles(File dir) {
+        File[] file = dir.listFiles();
+        if (file == null) {
+            throw new StorageException("Array is empty", null);
+        }
+        return file;
     }
 }

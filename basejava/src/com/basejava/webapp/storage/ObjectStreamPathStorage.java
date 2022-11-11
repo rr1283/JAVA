@@ -5,10 +5,10 @@ import com.basejava.webapp.model.Resume;
 
 import java.io.*;
 
-public class ObjectStreamStorage extends AbstractFileStorage {
+public class ObjectStreamPathStorage extends AbstractPathStorage {
 
-    protected ObjectStreamStorage(File directory) {
-        super(directory);
+    protected ObjectStreamPathStorage(String directory) {
+        super(String.valueOf(directory));
     }
 
     @Override
