@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractFileStorage extends AbstractStorage<File> {
+public class AbstractFileStorage extends AbstractStorage<File> {
     private final File directory;
+    SerializeStrategy strategy;
 
-    protected AbstractFileStorage(File directory) {
+    protected AbstractFileStorage(File directory, SerializeStrategy strategy) {
         Objects.requireNonNull(directory, "directory must not be null");
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not directory");
@@ -20,11 +21,8 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not readable/writable");
         }
         this.directory = directory;
+        this.strategy = strategy;
     }
-
-    protected abstract void doWrite(Resume r, OutputStream os) throws IOException;
-
-    protected abstract Resume doRead(InputStream is) throws IOException;
 
     @Override
     public void clear() {
@@ -36,8 +34,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public int size() {
-        File[] files = getArrayFiles(directory);
-        return files.length;
+        return getArrayFiles(directory).length;
     }
 
     @Override
@@ -48,7 +45,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected void doUpdate(Resume r, File file) {
         try {
-            doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
+            strategy.doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("Write error", r.getUuid(), e);
         }
@@ -71,7 +68,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     protected Resume doGet(File file) {
         try {
-            return doRead(new BufferedInputStream(new FileInputStream(file)));
+            return strategy.doRead(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("Get error", file.getName(), e);
         }
