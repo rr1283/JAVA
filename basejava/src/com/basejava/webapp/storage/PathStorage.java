@@ -16,9 +16,9 @@ import java.util.stream.Collectors;
 
 public class PathStorage extends AbstractStorage<Path> {
     private final Path directory;
-    final SerializeStrategy strategy;
+    private final SerializeStrategy strategy;
 
-    protected PathStorage(String dir, SerializeStrategy strategy) {
+    public PathStorage(String dir, SerializeStrategy strategy) {
         directory = Paths.get(dir);
         Objects.requireNonNull(directory, "directory must not be null");
         this.strategy = strategy;
